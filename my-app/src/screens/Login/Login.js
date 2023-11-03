@@ -58,11 +58,11 @@ class Login extends Component {
 
                 <TextInput
                     style = {styles.input}
-                    onChangeText={(text)=>this.setState({password: text})}
+                    onChangeText={(text)=>this.setState({pass: text})}
                     placeholder = "password"
                     keyboardType = "default"
                     secureTextEntry={true}
-                    value = {this.state.password}
+                    value = {this.state.pass}
 
                 />
 
@@ -73,7 +73,7 @@ class Login extends Component {
                 null}
                 
 
-                <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
+                <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.pass)}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
@@ -129,3 +129,6 @@ const styles = StyleSheet.create({
   });
   
   export default Login;
+
+
+  

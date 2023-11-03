@@ -10,11 +10,10 @@ class Register extends Component {
         this.state = {
             email: "",
             userName: "",
-            password: "",
+            pass: "",
             bio: "",
             fotoPerfil: "",
-            error: null
-
+            error: null,
         }
     }
 
@@ -56,7 +55,7 @@ class Register extends Component {
                 this.setState({
                     email:"",
                     userName: "",
-                    password:"",
+                    pass:"",
                     bio: "",
                     fotoPerfil:"",
                     error : null
@@ -101,11 +100,11 @@ class Register extends Component {
 
                 <TextInput
                     style = {styles.input}
-                    onChangeText={(text)=>this.setState({password: text})}
+                    onChangeText={(text)=>this.setState({pass: text})}
                     placeholder = "password"
                     keyboardType = "default"
                     secureTextEntry={true}
-                    value = {this.state.password}
+                    value = {this.state.pass}
 
                 />
 
@@ -131,7 +130,7 @@ class Register extends Component {
                 ) : 
                 null}
     
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password)}>
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.pass)}>
                     <Text style={styles.buttonText}>Registrarse</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
@@ -187,3 +186,6 @@ const styles = StyleSheet.create({
   });
   
   export default Register;
+
+
+  
