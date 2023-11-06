@@ -49,8 +49,6 @@ class App extends Component {
     const { isAuthenticated } = this.state;
 
     return (
-      
-
       <NavigationContainer style={styles.container}>
         <Stack.Navigator>
           
