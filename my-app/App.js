@@ -51,6 +51,7 @@ class App extends Component {
     return (
       <NavigationContainer style={styles.container}>
         <Stack.Navigator>
+          
           {isAuthenticated ? (
             <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
           ) : (
