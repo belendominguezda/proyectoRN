@@ -7,11 +7,13 @@ import { StyleSheet } from "react-native";
 
 import { auth } from "../../firebase/config";
 
+import Loading from "../../screens/Loading/Loading";
+import TabNavigation from "./TabNavigation";
 import Register from "../../screens/Register/Register";
 import Login from "../../screens/Login/Login";
-import TabNavigation from "./TabNavigation";
 import PerfilUsuario from "../../screens/PerfilUsuario/PerfilUsuario";
 import Comentarios from "../../screens/Comentarios/Comentarios";
+import CreacionExitosa from "../../screens/CreacionExitosa/CreacionExitosa";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,15 +28,16 @@ class StackNavigation extends Component {
 
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
-            console.log("Chequear si el usuario está loguado en firebase.");
             if (user) {
-              // El usuario está autenticado, redirigirlo a la pantalla Home.
-              console.log(user)
-              this.setState({ isAuthenticated: true, isLoading: false });
+                this.setState({
+                    isAuthenticated: true,
+                    isLoading: false,
+                });
             } else {
-              // El usuario no está autenticado.
-              console.log(user)
-              this.setState({ isAuthenticated: false, isLoading: false }); //esto deberia ser true pero sino no funciona
+                this.setState({
+                    isAuthenticated: false,
+                    isLoading: false,
+                });
             }
         });
     }
@@ -43,19 +46,40 @@ class StackNavigation extends Component {
         return (
             <NavigationContainer style={ styles.container }>
                 <Stack.Navigator>
-                    <Stack.Screen 
-                        name="Register"
-                        component={ Register }
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen 
-                        name="Login"
-                        component={ Login }
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen 
-                        name="TabNavigation"
-                        component={ TabNavigation }
+                    {
+                        this.state.isLoading ?
+                            <Stack.Screen
+                                name="Loading"
+                                component={ Loading }
+                                options={{ headerShown: false }}
+                            /> :
+                            null
+                    }
+                    {
+                        this.state.isAuthenticated ?
+                            <Stack.Screen
+                                name="TabNavigation"
+                                component={ TabNavigation }
+                                options={{ headerShown: false }}
+                            /> : 
+                            <Stack.Group>
+                                <>
+                                    <Stack.Screen
+                                        name="Register"
+                                        component={ Register }
+                                        options={{ headerShown: false }}
+                                    />
+                                    <Stack.Screen
+                                        name="Login"
+                                        component={ Login }
+                                        options={{ headerShown: false }}
+                                    />
+                                </>
+                            </Stack.Group>
+                    }
+                    <Stack.Screen
+                        name="CreacionExitosa"
+                        component={ CreacionExitosa }
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen

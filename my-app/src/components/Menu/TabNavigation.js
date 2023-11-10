@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { StyleSheet } from "react-native";
-
 import Home from "../../screens/Home/Home";
 import BuscadorUsuarios from "../../screens/BuscadorUsuarios/BuscadorUsuarios";
 import CrearPosteo from "../../screens/CrearPosteo/CrearPosteo";
@@ -24,25 +22,49 @@ class TabNavigation extends Component {
     render() {
         return (
             <Tab.Navigator>
-                <Tab.Screen 
+                <Tab.Screen
                     name="Home"
-                    component={ Home }
-                    options={{ headerShown: false }}
+                    component={Home}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <FontAwesome name="home" color={color} size={size} />
+                        ),
+                        tabBarLabel: () => null,
+                        headerShown: false,
+                    }}
                 />
-                <Tab.Screen 
+                <Tab.Screen
                     name="BuscadorUsuarios"
-                    component={ BuscadorUsuarios }
-                    options={{ headerShown: false }}
+                    component={BuscadorUsuarios}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <FontAwesome name="search" color={color} size={size} />
+                        ),
+                        tabBarLabel: () => null,
+                        headerShown: false,
+                    }}
                 />
-                <Tab.Screen 
+                <Tab.Screen
                     name="CrearPosteo"
-                    component={ CrearPosteo }
-                    options={{ headerShown: false }}
+                    component={CrearPosteo}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <FontAwesome name="plus-square" color={color} size={size} />
+                        ),
+                        tabBarLabel: () => null,
+                        headerShown: false,
+                    }}
                 />
-                <Tab.Screen 
+                <Tab.Screen
                     name="MiPerfil"
-                    component={ MiPerfil }
-                    options={{ headerShown: false }}
+                    component={MiPerfil}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <FontAwesome name="user" color={color} size={size} />
+                        ),
+                        tabBarLabel: () => null,
+                        headerShown: false,
+                    }}
                 />
             </Tab.Navigator>
         )
