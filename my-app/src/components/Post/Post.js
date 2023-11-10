@@ -24,8 +24,8 @@ class Post extends Component {
 
         db.collection("posts")
             .where("id", "==", id)
-            .onSnapshot((snapshot) => {
-                snapshot.forEach((doc) => {
+            .onSnapshot(function (snapshot) {
+                snapshot.forEach(function (doc) {
                     const data = doc.data();
                     const arrayLikes = data.likes || [];
                     const cantidadComentarios = data.comentarios ? data.comentarios.length : 0;
@@ -35,25 +35,27 @@ class Post extends Component {
                         likes: arrayLikes,
                         comentario: cantidadComentarios,
                     });
-                });
-            });
+                }.bind(this));
+            }.bind(this));
     }
 
     darLike() {
         const id = this.props.id;
         const likes = this.state.likes;
 
-        const nuevoArrayLikes = likes.push(auth.currentUser.email);
+        const nuevoArrayLikes = likes.concat(auth.currentUser.email);
 
-        db.collection("posts").where("id", "==", id).get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
+        db.collection("posts")
+            .where("id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     db.collection("posts").doc(doc.id).update({
                         likes: nuevoArrayLikes,
                     });
                 });
             })
-            .catch((error) => {
+            .catch(function (error) {
                 console.log(error);
             });
     }
@@ -62,47 +64,60 @@ class Post extends Component {
         const id = this.props.id;
         const likes = this.state.likes;
 
-        const nuevoArrayLikes = likes.filter((like) => like !== auth.currentUser.email);
+        const nuevoArrayLikes = likes.filter(function (like) {
+            return like !== auth.currentUser.email;
+        });
 
-        db.collection("posts").where("id", "==", id).get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
+        db.collection("posts")
+            .where("id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
                     db.collection("posts").doc(doc.id).update({
                         likes: nuevoArrayLikes,
                     });
                 });
             })
-            .catch((error) => {
+            .catch(function (error) {
                 console.log(error);
             });
     }
 
     render() {
+        const userName = this.props.userName;
+        const image = this.props.image;
+        const description = this.props.description;
+        const navigation = this.props.navigation;
+
+        const like = this.state.like;
+        const likes = this.state.likes;
+        const comentario = this.state.comentario;
+
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("PerfilUsuario", { email: this.props.owner, navigation: this.props.navigation })}>
-                    <Text>{this.props.userName}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("PerfilUsuario", { email: this.props.owner, navigation })}>
+                    <Text>{userName}</Text>
                 </TouchableOpacity>
                 <Image
-                    source={{ uri: this.props.image }}
+                    source={{ uri: image }}
                     style={styles.imagen}
                     resizeMode="contain"
                 />
-                <Text>{this.props.description}</Text>
-                {this.state.likes.length > 0 ? (
+                <Text>{description}</Text>
+                {likes.length > 0 ? (
                     <View>
-                        { this.state.like ? (
+                        {like ? (
                             <TouchableOpacity onPress={() => this.quitarLike()}>
                                 <Text>
                                     <FontAwesome name="heart" size={24} color="red" />
-                                    <Text> {this.state.likes.length} likes</Text>
+                                    <Text> {likes.length} likes</Text>
                                 </Text>
                             </TouchableOpacity>
                         ) : (
                             <TouchableOpacity onPress={() => this.darLike()}>
                                 <Text>
                                     <FontAwesome name="heart" size={24} color="gray" />
-                                    <Text> {this.state.likes.length} likes</Text>
+                                    <Text> {likes.length} likes</Text>
                                 </Text>
                             </TouchableOpacity>
                         )}
@@ -111,12 +126,12 @@ class Post extends Component {
                     <TouchableOpacity onPress={() => this.darLike()}>
                         <Text>
                             <FontAwesome name="heart" size={24} color="gray" />
-                            <Text> {this.state.likes.length} likes</Text>
+                            <Text> {likes.length} likes</Text>
                         </Text>
                     </TouchableOpacity>
                 )}
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", { id: this.props.id })}>
-                    <Text>Hay {this.props.comentario} Comentarios</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("Comentarios", { id: this.props.id })}>
+                    <Text>Hay {comentario} Comentarios</Text>
                 </TouchableOpacity>
             </View>
         );
