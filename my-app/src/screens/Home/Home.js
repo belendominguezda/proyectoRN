@@ -1,43 +1,45 @@
-import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
-import {auth} from '../../firebase/config'
+import React, { Component } from 'react';
+
+import { View, Text, StyleSheet } from 'react-native';
+
+import PostContainer from '../../components/PostContainer/PostContainer';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nuevoPost: false
+    }
+  }
 
-    constructor(){
-        super()
+  componentDidUpdate(prevProps) {
+    if (this.props.route.params?.nuevoPost !== prevProps.route.params?.nuevoPost) {
+      console.log("Se creó un nuevo post")
+      this.setState({ nuevoPost: true })
+    }
+  }
 
-        this.state = {
-            
-
+  render() {
+    return (
+      <View style={ styles.container } >
+        <Text>HOME</Text>
+        {
+          this.state.nuevoPost ?
+          <PostContainer navigation={ this.props.navigation } nuevoPost={ this.state.nuevoPost }/> :
+          <PostContainer navigation={ this.props.navigation } nuevoPost={ this.state.nuevoPost }/>
         }
-    }
-
-    logout(){
-      auth.signOut();
-       //Redirigir al usuario a la home del sitio.
-      this.props.navigation.navigate('Login')
-    }
-     
-      render(){
-        return(
-            <View styles = {styles.formContainer}>
-                <Text>Home</Text>
-                <TouchableOpacity onPress={()=>this.logout()}>
-                    <Text>Logout</Text>
-                </TouchableOpacity>
-
-            </View>
-            
-
-        )
-      }
+      </View>
+    )
+  }
 
 }
 
 const styles = StyleSheet.create({
-    
-    
-  });
-  
-  export default Home;
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
+
+export default Home;
