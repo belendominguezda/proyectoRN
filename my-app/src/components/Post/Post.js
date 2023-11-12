@@ -140,12 +140,41 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+      marginBottom: 20,
+      backgroundColor: "#fff", 
+      padding: 10,
+      borderRadius: 10, 
+      borderWidth: 1, 
+      borderColor: "#ddd", 
+    },
+    userName: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 5,
+      fontFamily : 'IBM Plex Serif Regular'
     },
     imagen: {
-        width: width * 3 / 5,
-        height: width * (3 / 5) * (2 / 3),
+      width: width * 3 / 5,
+      height: width * (3 / 5) * (2 / 3),
+      borderRadius: 8, 
+      marginBottom: 10, 
     },
-});
+    description: {
+      fontSize: 14,
+      marginBottom: 10,
+    },
+    likeContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    likeIcon: {
+      marginRight: 5,
+    },
+    commentLink: {
+      color: "blue", 
+      marginTop: 5,
+    },
+  });
+  
 
 export default Post;

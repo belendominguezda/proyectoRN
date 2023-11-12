@@ -93,8 +93,10 @@ class PostContainer extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    }
-})
+      flex: 1,
+      padding: 10, // Ajusta el espacio interno según tus preferencias
+    },
+  });
+  
 
 export default PostContainer;
