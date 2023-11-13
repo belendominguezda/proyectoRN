@@ -79,15 +79,8 @@ class PostContainer extends Component {
                                             image={item.image}
                                             description={item.description}
                                             navigation={this.props.navigation}
-                                            eliminarPost={this.props.eliminarPost} 
+                                            eliminarPost={this.props.eliminarPost} // Pasar eliminarPost como prop
                                         />
-                                         {this.props.currentUserEmail === item.owner && (
-                                            <TouchableOpacity
-                                                style={styles.button}
-                                                onPress={() => this.props.eliminarPost(item.id.toString())}>
-                                                <Text style={styles.buttonText}>Eliminar Post</Text>
-                                            </TouchableOpacity>
-                                        )}
                                     </View>
                                 )}
                                 keyExtractor={(item) => item.id.toString()} // Utilizar id como cadena

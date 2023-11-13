@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 import { auth, db } from "../../firebase/config";
 
@@ -11,7 +11,8 @@ class MiPerfil extends Component {
         this.state = {
             posts: [],
             cargando: true,
-            userName: "",
+            minibio: "",
+            fotoPerfil: "",
             nuevoPost:  false
         }
     }
@@ -26,23 +27,31 @@ class MiPerfil extends Component {
     componentDidMount() {
         let email = auth.currentUser.email
 
-             let currentUser = db.collection("users").doc(email);
-             currentUser
-                 .get()
-                 .then((user) => {
-                     console.log("Info del usuario:", user.data());
-                     if (user.exists) {
-                         let username = user.data().userName;
-                         this.setState({ userName: username, cargando: false });
-                     } else {
-                         console.log("Usuario no encontrado");
-                         this.setState({ cargando: false });
-                     }
-                 })
-                 .catch((error) => {
-                     console.error("Error al obtener info del usuario:", error);
-                     this.setState({ cargando: false });
-                 });
+        db.collection("users").where("owner", "==", email).get()
+            .then(docs => {
+                docs.forEach(doc => {
+                    console.log(doc.data())
+                    this.setState({ minibio: doc.data().bio, fotoPerfil: doc.data().fotoPerfil, cargando: false })  
+                })
+            })
+            .catch(error => console.log(error))
+
+
+            //  let currentUser = db.collection("users").doc(auth.currentUser.uid);
+            //  currentUser.get().then((user) => {
+            //          console.log("Info del usuario:", user.data());
+            //          if (user.exists) {
+            //              let username = user.data().userName;
+            //              this.setState({ userName: username, cargando: false });
+            //          } else {
+            //              console.log("Usuario no encontrado");
+            //              this.setState({ cargando: false });
+            //          }
+            //      })
+            //      .catch((error) => {
+            //          console.error("Error al obtener info del usuario:", error);
+            //          this.setState({ cargando: false });
+            //      });
 
         db.collection("posts").where("owner", "==", email).get()
             .then(docs => {
@@ -55,35 +64,20 @@ class MiPerfil extends Component {
             .catch(error => console.log(error))
     }
 
-    eliminarPost = (postId) => {
-        db.collection("posts")
-            .doc(postId)
-            .delete()
-            .then(() => {
-                console.log("Post eliminado correctamente");
-                // Actualizar el estado para reflejar la eliminación del post
-                this.setState(
-                    (prevState) => ({
-                        posts: prevState.posts.filter((post) => post.id !== postId),
-                        totalPosts: prevState.totalPosts - 1,
-                        nuevoPost: !prevState.nuevoPost, // Cambiar el estado de nuevoPost
-                    }),
-                    () => console.log("Estado actualizado:", this.state.posts)
-                );
-            })
-            .catch((error) => {
-                console.error("Error al eliminar el post:", error);
-                // Agrega aquí cualquier lógica de manejo de errores adicional
-            });
-    };
-    
-    
-    
-
     render() {
         return (
             <View style={ styles.container }>
-                <Text style={styles.textoSaludo}>HOLA, {this.state.userName || this.state.email }. Bienvenido</Text>
+                <Text style={styles.textoSaludo}>HOLA, { auth.currentUser.email }. Bienvenido</Text>
+                <Text style={styles.textoSaludo}>Minibio: {this.state.minibio}</Text>
+                {
+                    this.state.fotoPerfil ?
+                    <Image
+                        source={{ uri: this.state.fotoPerfil }}
+                        style={styles.image}
+                        resizeMode="contain"
+                    /> :
+                    null
+                }
                 <Text style={styles.totalPosts}>Total de publicaciones: {this.state.totalPosts || 0}</Text>
                 <TouchableOpacity style={styles.logoutButton} onPress={() => this.logout()}>
                     <Text style={styles.logoutButtonText}>Logout</Text>
@@ -94,7 +88,8 @@ class MiPerfil extends Component {
                     <PostContainer 
                         email={ auth.currentUser.email } 
                         navigation={ this.props.navigation } 
-                        eliminarPost={this.eliminarPost}
+                        // Initial params
+                        eliminarPost = { this.props.eliminarPost }
                         nuevoPost={this.state.nuevoPost} // Pasar nuevoPost como prop
                     />
                 }
@@ -129,6 +124,12 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
+    },
+    image: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        marginBottom: 10,
     },
 });
 
