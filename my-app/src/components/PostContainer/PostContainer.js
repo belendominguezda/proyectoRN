@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 
 import { db } from "../../firebase/config";
 
@@ -11,7 +11,7 @@ class PostContainer extends Component {
         super(props);
         this.state = {
             posts: [],
-            cargando: true
+            cargando: true,
         };
     }
 
@@ -69,20 +69,29 @@ class PostContainer extends Component {
                             this.state.posts.length === 0 ?
                             <Text>No hay posts</Text> :
                             <FlatList
-                                data={ this.state.posts }
+                                data={this.state.posts}
                                 renderItem={({ item }) => (
-                                    <Post
-                                        id={ item.id }
-                                        userName={ item.userName }
-                                        owner={ item.owner }
-                                        image={ item.image }
-                                        description={ item.description }
-                                        navigation={ this.props.navigation }
-                                    />
+                                    <View>
+                                        <Post
+                                            id={item.id}
+                                            userName={item.userName}
+                                            owner={item.owner}
+                                            image={item.image}
+                                            description={item.description}
+                                            navigation={this.props.navigation}
+                                            eliminarPost={this.props.eliminarPost} 
+                                        />
+                                        {this.props.email && (
+                                            <TouchableOpacity style = {styles.button} onPress={() => this.props.eliminarPost(item.id.toString())}                                            >
+                                                <Text style={styles.buttonText}>Eliminar Post</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                    </View>
                                 )}
-                                keyExtractor={(item) => item.id}
-                                showsVerticalScrollIndicator={ false }
+                                keyExtractor={(item) => item.id.toString()} // Utilizar id como cadena
+                                showsVerticalScrollIndicator={false}
                             />
+
                         }
                     </View>
                 }
@@ -95,6 +104,17 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 10, // Ajusta el espacio interno según tus preferencias
+    }, button: {
+        backgroundColor: 'black',
+        padding: 5,
+        borderRadius: 5,
+        marginTop: 0,
+        marginBottom: 20
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
   });
   

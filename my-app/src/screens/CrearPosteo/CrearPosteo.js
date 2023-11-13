@@ -40,10 +40,10 @@ class CrearPosteo extends Component {
 
 render() {
     return (
-        <View>
-            <Text>Crear posteo</Text>
+        <View style = {styles.container}>
+            <Text style={styles.title}>Crear posteo</Text>
 
-            <Text>URL de la imagen</Text>
+            <Text style={styles.elemento}>URL de la imagen</Text>
             <TextInput
                 style={styles.input}
                 placeholder="https://www.example.com"
@@ -52,19 +52,19 @@ render() {
                 value={this.state.image}
             />
 
-            <Text>Descripción del posteo</Text>
+            <Text style={styles.elemento}>Descripción del posteo</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, styles.multilineInput]}
                 placeholder="Esta es la descripción del posteo"
                 keyboardType="default"
                 onChangeText={(text) => this.setState({ description: text })}
                 value={this.state.description}
             />
 
-            <TouchableOpacity
+            <TouchableOpacity style={styles.postButton}
                 onPress={() => this.agregarPosteo(this.state.image, this.state.description)}
             >
-                <Text>Postear</Text>
+                <Text style={styles.postButtonText}>Postear</Text>
             </TouchableOpacity>
         </View>
     )
@@ -72,9 +72,39 @@ render() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 20,
+    },
+    elemento: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
     input: {
-        
-    }
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 15,
+    },
+    multilineInput: {
+        textAlignVertical: "top", // For multiline input to start from the top
+    },
+    postButton: {
+        backgroundColor: "#3498db",
+        padding: 15,
+        borderRadius: 5,
+        alignItems: "center",
+    },
+    postButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
 });
 
 export default CrearPosteo;

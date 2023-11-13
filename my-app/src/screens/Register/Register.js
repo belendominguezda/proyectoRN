@@ -23,14 +23,14 @@ class Register extends Component {
 
     register(email, pass, userName, bio, fotoPerfil) {
         if (bio == null) {
-            bio = ""; // Establece un valor predeterminado en blanco si bio es nulo
+            bio = ""; 
         }
 
         if (fotoPerfil == null) {
-            fotoPerfil = ""; // Establece un valor predeterminado en blanco si fotoPerfil es nulo
+            fotoPerfil = "";
         }
 
-        if (userName == null) {
+        if (!userName || userName.trim() === "") {
             this.setState({ error: "El nombre de usuario no puede estar vacío" });
             return;
         }
@@ -51,7 +51,7 @@ class Register extends Component {
                             displayName: userName
                         })
                         console.log("entré")
-                        // Limpia los estados después del registro
+                        // Limpiar los estados después del registro
                         this.setState({
                             email: "",
                             userName: "",
@@ -97,6 +97,7 @@ class Register extends Component {
                     placeholder="user name"
                     keyboardType="default"
                     value={this.state.userName}
+                    required
                 />
 
                 <TextInput

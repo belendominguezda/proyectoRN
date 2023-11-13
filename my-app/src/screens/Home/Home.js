@@ -22,7 +22,7 @@ class Home extends Component {
   render() {
     return (
       <View style={ styles.container } >
-        <Text>HOME</Text>
+        <Text style={styles.textoHome}>HOME</Text>
         {
           this.state.nuevoPost ?
           <PostContainer navigation={ this.props.navigation } nuevoPost={ this.state.nuevoPost }/> :
@@ -39,8 +39,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff", 
+    backgroundColor: "#C0C0C0", 
   },
+  textoHome: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+},
 });
 
 
