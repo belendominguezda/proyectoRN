@@ -39,7 +39,10 @@ class PerfilUsuario extends Component {
                 {
                     this.state.cargando ?
                     <Text>Cargando</Text> :
-                    <PostContainer email={ this.props.route.params.email } navigation={ this.props.route.params.navigation }/>
+                    <PostContainer 
+                    email={ this.props.route.params.email } 
+                    navigation={ this.props.route.params.navigation }
+                    currentUserEmail={this.props.currentUserEmail}/>
                 }
             </View>
         )

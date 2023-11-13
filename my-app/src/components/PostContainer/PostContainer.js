@@ -81,8 +81,10 @@ class PostContainer extends Component {
                                             navigation={this.props.navigation}
                                             eliminarPost={this.props.eliminarPost} 
                                         />
-                                        {this.props.email && (
-                                            <TouchableOpacity style = {styles.button} onPress={() => this.props.eliminarPost(item.id.toString())}                                            >
+                                         {this.props.currentUserEmail === item.owner && (
+                                            <TouchableOpacity
+                                                style={styles.button}
+                                                onPress={() => this.props.eliminarPost(item.id.toString())}>
                                                 <Text style={styles.buttonText}>Eliminar Post</Text>
                                             </TouchableOpacity>
                                         )}

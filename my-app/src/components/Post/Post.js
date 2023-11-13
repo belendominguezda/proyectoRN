@@ -93,6 +93,11 @@ class Post extends Component {
         const likes = this.state.likes;
         const comentario = this.state.comentario;
 
+        const owner = this.props.owner; 
+        const currentUserEmail = auth.currentUser.email;
+
+
+
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => navigation.navigate("PerfilUsuario", { email: this.props.owner, navigation })}>
@@ -133,6 +138,13 @@ class Post extends Component {
                 <TouchableOpacity onPress={() => navigation.navigate("Comentarios", { id: this.props.id })}>
                     <Text>Hay {comentario} Comentarios</Text>
                 </TouchableOpacity>
+                
+                {currentUserEmail === owner && (
+                <TouchableOpacity onPress={() => this.props.eliminarPost(this.props.id)}>
+                    <Text>Eliminar Post</Text>
+                </TouchableOpacity>
+        )}
+
             </View>
         );
     }
