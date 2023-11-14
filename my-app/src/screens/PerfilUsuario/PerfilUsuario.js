@@ -31,14 +31,16 @@ class PerfilUsuario extends Component {
     render() {
         return (
             <View style={ styles.container }>
-                <Text>Screen Perfil de Usuario</Text>
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                    <Text>&larr;</Text>
+                <Text style={styles.title}> Perfil de Usuario: { this.props.route.params.userName }</Text>
+                <TouchableOpacity 
+                     style={styles.backButton}
+                    onPress={() => this.props.navigation.goBack()}>
+                    <Text style={styles.backButtonText}>&larr;</Text>
                 </TouchableOpacity>
-                <Text>Email: { this.props.route.params.email }</Text>
+                <Text  style={styles.emailText}>Email: { this.props.route.params.email }</Text>
                 {
                     this.state.cargando ?
-                    <Text>Cargando</Text> :
+                    <Text style={styles.loadingText}>Cargando</Text> :
                     <PostContainer 
                     email={ this.props.route.params.email } 
                     navigation={ this.props.route.params.navigation }
@@ -49,10 +51,38 @@ class PerfilUsuario extends Component {
     }
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
+        padding: 20,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 10,
+    },
+    backButton: {
+        alignSelf: "flex-start",
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: "#3498db",
+        borderRadius: 8,
+    },
+    backButtonText: {
+        color: "#fff",
+        fontSize: 18,
+    },
+    emailText: {
+        fontSize: 18,
+        marginBottom: 20,
+    },
+    loadingText: {
+        fontSize: 18,
+        color: "#888",
+    },
 });
 
 export default PerfilUsuario;

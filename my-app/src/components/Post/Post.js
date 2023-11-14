@@ -142,8 +142,8 @@ class Post extends Component {
                 </TouchableOpacity>
                 {
                     currentUserEmail === owner ?
-                    <TouchableOpacity onPress={() => this.props.eliminarPost(this.props.id)}>
-                        <Text>Eliminar Post</Text><Text>{this.props.id}</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => this.props.eliminarPost(this.props.id)}>
+                        <Text style={styles.buttonText}>Eliminar Post</Text>
                     </TouchableOpacity> : 
                     null
                 }
@@ -188,6 +188,18 @@ const styles = StyleSheet.create({
     commentLink: {
         color: "blue",
         marginTop: 5,
+    },
+    button: {
+        backgroundColor: 'black',
+        padding: 5,
+        borderRadius: 5,
+        marginTop: 0,
+        marginBottom: 20
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
 

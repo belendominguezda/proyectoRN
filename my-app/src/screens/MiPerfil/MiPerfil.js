@@ -13,7 +13,8 @@ class MiPerfil extends Component {
             cargando: true,
             minibio: "",
             fotoPerfil: "",
-            nuevoPost:  false
+            nuevoPost:  false,
+            postEliminado: false
         }
     }
 
@@ -36,23 +37,6 @@ class MiPerfil extends Component {
             })
             .catch(error => console.log(error))
 
-
-            //  let currentUser = db.collection("users").doc(auth.currentUser.uid);
-            //  currentUser.get().then((user) => {
-            //          console.log("Info del usuario:", user.data());
-            //          if (user.exists) {
-            //              let username = user.data().userName;
-            //              this.setState({ userName: username, cargando: false });
-            //          } else {
-            //              console.log("Usuario no encontrado");
-            //              this.setState({ cargando: false });
-            //          }
-            //      })
-            //      .catch((error) => {
-            //          console.error("Error al obtener info del usuario:", error);
-            //          this.setState({ cargando: false });
-            //      });
-
         db.collection("posts").where("owner", "==", email).get()
             .then(docs => {
                 let arrayPosts = []
@@ -63,6 +47,22 @@ class MiPerfil extends Component {
             })
             .catch(error => console.log(error))
     }
+     //ESTO NO FUNCIONA 
+    eliminarPost = (postId) => {
+        // Obtener la referencia al documento del post que se va a eliminar
+        const postRef = db.collection("posts").doc(postId);
+    
+        // Eliminar el post de la base de datos
+        postRef.delete()
+            .then(() => {
+                console.log("Post eliminado correctamente");
+                this.setState({ postEliminado: true });
+            })
+            .catch((error) => {
+                console.error("Error al eliminar el post: ", error);
+            });
+    }
+    
 
     render() {
         return (
@@ -88,9 +88,8 @@ class MiPerfil extends Component {
                     <PostContainer 
                         email={ auth.currentUser.email } 
                         navigation={ this.props.navigation } 
-                        // Initial params
-                        eliminarPost = { this.props.eliminarPost }
                         nuevoPost={this.state.nuevoPost} // Pasar nuevoPost como prop
+                        eliminarPost={this.eliminarPost}
                     />
                 }
             </View>
@@ -131,6 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         marginBottom: 10,
     },
+    
 });
 
 export default MiPerfil;

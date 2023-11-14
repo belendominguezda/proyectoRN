@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, TextInput } from "react-native";
-
 import { auth, db, storage } from "../../firebase/config";
+import Camara from "../../components/Camara/Camara";
 
 class CrearPosteo extends Component {
     constructor(props) {
@@ -36,14 +36,21 @@ class CrearPosteo extends Component {
         })
         .catch(error => console.log(error))
 
-}
+    }
+    traerUrlDeFoto(url){
+        this.setState({
+            image:url
+        })
+    }
 
 render() {
     return (
         <View style = {styles.container}>
             <Text style={styles.title}>Crear posteo</Text>
-
             <Text style={styles.elemento}>URL de la imagen</Text>
+
+            <Camara style={styles.camara} traerUrlDeFoto = {url=>this.traerUrlDeFoto(url)} />
+
             <TextInput
                 style={styles.input}
                 placeholder="https://www.example.com"
@@ -105,6 +112,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
     },
+    camara:{
+        height: 400,
+    }
 });
 
 export default CrearPosteo;

@@ -62,22 +62,26 @@ class BuscadorUsuarios extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <TouchableOpacity
+                    style={styles.backButton}
                     onPress={() => this.props.navigation.goBack()}
                 >
                     <Text>Volver</Text>
                 </TouchableOpacity>
 
                 { // Sección 1: formulario de búsqueda
-                    <View>
+                    <View  style={styles.searchSection}>
                         <TextInput
+                            style={styles.input}
                             placeholder="Buscar un usuario"
                             onChangeText={( terminoBuscado ) => this.setState({ terminoBuscado })}
                             value={ this.state.terminoBuscado }
                         />
-                        <TouchableOpacity onPress={() => this.buscarUsuarios(this.state.terminoBuscado)}>
-                            <Text>Buscar</Text>
+                        <TouchableOpacity 
+                            style={styles.searchButton}
+                            onPress={() => this.buscarUsuarios(this.state.terminoBuscado)}>
+                            <Text  style={styles.searchButtonText}>Buscar</Text>
                         </TouchableOpacity>
                     </View>
                 }
@@ -90,11 +94,11 @@ class BuscadorUsuarios extends Component {
                             <FlatList
                                 data={this.state.usuarios}
                                 renderItem={({ item }) => 
-                                    <View>
+                                    <View style={styles.userContainer}>
                                         <TouchableOpacity
                                             onPress={() => this.props.navigation.navigate("Perfil", { email: item.email })}
                                         >
-                                            <Text>{item.userName}</Text>
+                                            <Text  style={styles.userName} >{item.userName}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -107,7 +111,49 @@ class BuscadorUsuarios extends Component {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        padding: 10,
+    },
+    backButton: {
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: "#3498db",
+        borderRadius: 8,
+        alignItems: "center",
+    },
+    searchSection: {
+        flexDirection: "row",
+        marginBottom: 10,
+    },
+    input: {
+        flex: 1,
+        marginRight: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+    },
+    searchButton: {
+        padding: 10,
+        backgroundColor: "#3498db",
+        borderRadius: 8,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    searchButtonText: {
+        color: "#fff",
+        fontSize: 16,
+    },
+    userContainer: {
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: "#f0f0f0",
+        borderRadius: 8,
+    },
+    userName: {
+        fontSize: 16,
+    },
 });
 
 export default BuscadorUsuarios;
