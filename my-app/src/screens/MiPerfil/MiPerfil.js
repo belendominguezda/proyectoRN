@@ -67,7 +67,7 @@ class MiPerfil extends Component {
     render() {
         return (
             <View style={ styles.container }>
-                <Text style={styles.textoSaludo}>HOLA, { auth.currentUser.email }. Bienvenido</Text>
+                <Text style={styles.textoSaludo}>HOLA, { auth.currentUser.displayName }. Bienvenido</Text>
                 <Text style={styles.textoSaludo}>Minibio: {this.state.minibio}</Text>
                 {
                     this.state.fotoPerfil ?
