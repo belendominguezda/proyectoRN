@@ -91,7 +91,8 @@ class StackNavigation extends Component {
                         name="PerfilUsuario"
                         component={ PerfilUsuario }
                         options={{ headerShown: false }}
-                    />  
+                    /> 
+                     {/*Agregar Screen contraseña  */}
                 </Stack.Navigator>
             </NavigationContainer>
         )
