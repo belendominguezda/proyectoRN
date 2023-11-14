@@ -69,7 +69,7 @@ class Camara extends Component {
             {this.state.permisos ? (
               this.state.mostrarCamara === false ? (
                 // Vista previa
-                <React.Fragment>
+                <View>
                   <Image
                     source={{ uri: this.state.urlInternaFoto }}
                     style={styles.previewImage}
@@ -88,7 +88,7 @@ class Camara extends Component {
                       <Text style={styles.buttonText}>Cancelar</Text>
                     </TouchableOpacity>
                   </View>
-                </React.Fragment>
+                </View>
               ) : (
                 // Cámara
                 <React.Fragment>
@@ -122,9 +122,13 @@ const styles = StyleSheet.create({
     },
     cameraBody: {
       flex: 7,
+      width: 400,
+      height : 300,
     },
     previewImage: {
       flex: 1,
+      width: 400,
+      height : 300
     },
     buttonContainer: {
       flexDirection: 'row',
