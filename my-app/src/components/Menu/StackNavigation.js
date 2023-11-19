@@ -14,6 +14,7 @@ import Login from "../../screens/Login/Login";
 import PerfilUsuario from "../../screens/PerfilUsuario/PerfilUsuario";
 import Comentarios from "../../screens/Comentarios/Comentarios";
 import CreacionExitosa from "../../screens/CreacionExitosa/CreacionExitosa";
+import Contrasenia from "../../screens/Contrasenia/Contrasenia";
 
 const Stack = createNativeStackNavigator();
 
@@ -65,15 +66,16 @@ class StackNavigation extends Component {
                             <Stack.Group>
                                 <>
                                     <Stack.Screen
-                                        name="Register"
-                                        component={ Register }
-                                        options={{ headerShown: false }}
-                                    />
-                                    <Stack.Screen
                                         name="Login"
                                         component={ Login }
                                         options={{ headerShown: false }}
                                     />
+                                    <Stack.Screen
+                                        name="Register"
+                                        component={ Register }
+                                        options={{ headerShown: false }}
+                                    />
+                                    
                                 </>
                             </Stack.Group>
                     }
@@ -92,7 +94,11 @@ class StackNavigation extends Component {
                         component={ PerfilUsuario }
                         options={{ headerShown: false }}
                     /> 
-                     {/*Agregar Screen contraseña  */}
+                    <Stack.Screen
+                        name="Contrasenia"
+                        component={ Contrasenia }
+                        options={{ headerShown: false }}
+                    /> 
                 </Stack.Navigator>
             </NavigationContainer>
         )

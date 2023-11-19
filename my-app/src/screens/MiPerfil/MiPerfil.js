@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from "react-native";
 
 import { auth, db } from "../../firebase/config";
 
@@ -36,23 +36,6 @@ class MiPerfil extends Component {
             })
             .catch(error => console.log(error))
 
-
-            //  let currentUser = db.collection("users").doc(auth.currentUser.uid);
-            //  currentUser.get().then((user) => {
-            //          console.log("Info del usuario:", user.data());
-            //          if (user.exists) {
-            //              let username = user.data().userName;
-            //              this.setState({ userName: username, cargando: false });
-            //          } else {
-            //              console.log("Usuario no encontrado");
-            //              this.setState({ cargando: false });
-            //          }
-            //      })
-            //      .catch((error) => {
-            //          console.error("Error al obtener info del usuario:", error);
-            //          this.setState({ cargando: false });
-            //      });
-
         db.collection("posts").where("owner", "==", email).get()
             .then(docs => {
                 let arrayPosts = []
@@ -63,14 +46,18 @@ class MiPerfil extends Component {
             })
             .catch(error => console.log(error))
     }
+    
+    cambiarContrasenia = () => {
+        this.props.navigation.navigate("Contrasenia");
+    };
 
     render() {
         return (
             <View style={ styles.container }>
                 <Text style={styles.textoSaludo}>HOLA, { auth.currentUser.displayName }. Bienvenido</Text>
                 <Text style={styles.textoSaludo}>Minibio: {this.state.minibio}</Text>
-                {
-                    this.state.fotoPerfil ?
+
+                {this.state.fotoPerfil ?
                     <Image
                         source={{ uri: this.state.fotoPerfil }}
                         style={styles.image}
@@ -82,6 +69,10 @@ class MiPerfil extends Component {
                 <TouchableOpacity style={styles.logoutButton} onPress={() => this.logout()}>
                     <Text style={styles.logoutButtonText}>Logout</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.cambiarContraseniaButton} onPress={this.cambiarContrasenia}>
+                    <Text style={styles.cambiarContraseniaButtonText}>Cambiar Contraseña</Text>
+                </TouchableOpacity>
+               
                 {
                     this.state.cargando ?
                     <Text>Cargando</Text> :
@@ -129,6 +120,16 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 100,
         marginBottom: 10,
+    }, cambiarContraseniaButton: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+    },
+    cambiarContraseniaButtonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
     
 });

@@ -31,7 +31,7 @@ class PerfilUsuario extends Component {
     render() {
         return (
             <View style={ styles.container }>
-                <Text style={styles.title}> Perfil de Usuario: { this.props.route.params.userName }</Text>
+                <Text style={styles.title}> Perfil de Usuario</Text> 
                 <TouchableOpacity 
                      style={styles.backButton}
                     onPress={() => this.props.navigation.goBack()}>
